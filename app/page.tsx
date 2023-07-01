@@ -1,11 +1,14 @@
-'use client'
+'use client';
 
-import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+import { ViewProps } from '@react-three/drei';
+import { MeshProps, PrimitiveProps } from '@react-three/fiber';
+import dynamic from 'next/dynamic';
+import { DetailedHTMLProps, FC, HTMLAttributes, PropsWithChildren, Suspense } from 'react';
+import { Color } from 'three';
 
-const Logo = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Logo), { ssr: false })
-const Dog = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Dog), { ssr: false })
-const Duck = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Duck), { ssr: false })
+const Logo = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Logo), { ssr: false }) as FC<PropsWithChildren<MeshProps & { route: string; }>>;
+const Dog = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Dog), { ssr: false }) as FC<PropsWithChildren<Record<string, any>>>;
+const Duck = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Duck), { ssr: false }) as FC<PropsWithChildren<Record<string, any>>>;
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
   ssr: false,
   loading: () => (
@@ -20,8 +23,8 @@ const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.
       </svg>
     </div>
   ),
-})
-const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mod.Common), { ssr: false })
+}) as unknown as FC<PropsWithChildren<ViewProps>>;
+const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mod.Common), { ssr: false }) as FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & { color?: string | Color; }>;
 
 export default function Page() {
   return (
@@ -78,5 +81,5 @@ export default function Page() {
         </div>
       </div>
     </>
-  )
+  );
 }
